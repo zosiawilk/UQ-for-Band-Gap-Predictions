@@ -1,4 +1,6 @@
 test_and_learning_code/materials_data.csv
 test_and_learning_code/materials_data_featurized.csv
+test_and_learning_code/materials_data_10k.csv
+test_and_learning_code/materials_data_10k_featurized.csv
 *.csv
 test_and_learning_code/*.csv
