@@ -2,5 +2,10 @@ test_and_learning_code/materials_data.csv
 test_and_learning_code/materials_data_featurized.csv
 test_and_learning_code/materials_data_10k.csv
 test_and_learning_code/materials_data_10k_featurized.csv
+MP_data/materials_data.csv
+MP_data/materials_data_featurized.csv
+MP_data/materials_data_10k.csv
+MP_data/materials_data_10k_featurized.csv
+MP_data/materials_data_10k_cleaned.csv
 *.csv
 test_and_learning_code/*.csv
