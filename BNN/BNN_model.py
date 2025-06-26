@@ -5,34 +5,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-"""
-======================== Bayesian Neural Network (BNN) model using Pyro. =====================
-
-- Class Definition:
-  `BayesianNN` inherits from `PyroModule`, which is a Pyro wrapper for PyTorch modules,
-    enabling probabilistic programming.
-
-- __init__ method:
-  - `self.fc1`: First fully connected (linear) layer with `input_dim` inputs and 50 outputs.  
-    - Its weights and biases are not fixed, but are random variables sampled 
-    from a standard normal distribution (`Normal(0, 1)`), making them Bayesian parameters.
-  - `self.fc2`: Second linear layer with 50 inputs and 1 output.  
-    - Its weights and biases are also Bayesian, sampled from `Normal(0, 1)`.
-
-- forward method:  
-  - Input `x` passes through `fc1` and a ReLU activation.
-  - Output is passed through `fc2` to get the predicted mean (`mean`).
-  - The observation noise `sigma` is sampled from a uniform distribution between 0 and 1.
-  - For each data point (using `pyro.plate` for vectorization), the observed target `y` is modeled
-    as a normal distribution with the predicted mean and noise `sigma`.
-  - Returns the predicted mean.
-
-Summary:  
-This is a Bayesian neural network with one hidden layer. All weights and biases are treated as random variables,
-so the model learns distributions over parameters, not just point estimates. 
-This allows for uncertainty quantification in predictions.
-"""
-
 class BayesianNN(PyroModule):
     def __init__(self, input_dim):
         super().__init__()
