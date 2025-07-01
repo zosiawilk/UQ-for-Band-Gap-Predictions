@@ -46,21 +46,11 @@ pyro.sample("obs", dist.Normal(mean, sigma), obs=y)	|    Defines the likelihood 
 """
 
 
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import pyro
-import pyro.distributions as dist
-from pyro.nn import PyroModule, PyroSample, PyroParam, PyroModuleList
-
 class BNN(PyroModule):
-    def __init__(self, input_dim, hid_dim=50, n_hid_layers=2, prior_scale=0.05):
+    def __init__(self, input_dim, hid_dim=50, n_hid_layers=2, prior_scale=1.0):
         super().__init__()
-        
-        self.hidden_layers = PyroModuleList([])  # List to hold Bayesian hidden layers
+        self.hidden_layers = PyroModuleList([])
         last_dim = input_dim
-
-        # Construct hidden layers with Bayesian weights and biases
         for i in range(n_hid_layers):
             layer = PyroModule[nn.Linear](last_dim, hid_dim)
             layer.weight = PyroSample(dist.Normal(0., prior_scale)
@@ -70,29 +60,17 @@ class BNN(PyroModule):
             self.hidden_layers.append(layer)
             last_dim = hid_dim
 
-        # Output layer: Bayesian linear layer for mean prediction
         self.out = PyroModule[nn.Linear](last_dim, 1)
         self.out.weight = PyroSample(dist.Normal(0., prior_scale)
                                      .expand([1, last_dim]).to_event(2))
         self.out.bias = PyroSample(dist.Normal(0., prior_scale)
                                    .expand([1]).to_event(1))
 
-        # Learnable log(sigma) for global observation noise
-        self.log_sigma = PyroParam(torch.tensor(-1.0))  # Initialize with log(0.37) ≈ -1
-
     def forward(self, x, y=None):
-        # Forward pass through hidden layers with Softplus activation
         for layer in self.hidden_layers:
-            x = F.softplus(layer(x))
-
-        # Compute mean prediction from output layer
-        mean = self.out(x).squeeze(-1)  # Shape: [batch_size]
-
-        # Convert log_sigma to sigma (standard deviation > 0)
-        sigma = torch.exp(self.log_sigma)  # Scalar std dev
-
-        # Vectorized observation model over the data batch
+            x = F.relu(layer(x))
+        mean = self.out(x).squeeze(-1)
+        sigma = 0.1  # fixed likelihood std
         with pyro.plate("data", x.shape[0]):
-            obs = pyro.sample("obs", dist.Normal(mean, sigma), obs=y)  # Likelihood
-
-        return mean  # Return predictive mean
+            obs = pyro.sample("obs", dist.Normal(mean, sigma), obs=y)
+        return mean
