@@ -35,37 +35,27 @@ import numpy as np
 """
 
 class BayesianNN(PyroModule):
-    def __init__(self, input_dim, out_dim=1, hid_dim=64, n_hid_layers=3, prior_scale=0.1):
+    def __init__(self, input_dim):
         super().__init__()
+        hidden_dim = 64
+        
+        self.fc1 = PyroModule[nn.Linear](input_dim, hidden_dim)
+        self.fc1.weight = PyroSample(dist.Normal(0., 1.).expand([hidden_dim, input_dim]).to_event(2))
+        self.fc1.bias = PyroSample(dist.Normal(0., 1.).expand([hidden_dim]).to_event(1))
 
-        self.activation = nn.Softplus()  # Better for regression and smoother than Tanh or ReLU
+        self.fc2 = PyroModule[nn.Linear](hidden_dim, hidden_dim)
+        self.fc2.weight = PyroSample(dist.Normal(0., 1.).expand([hidden_dim, hidden_dim]).to_event(2))
+        self.fc2.bias = PyroSample(dist.Normal(0., 1.).expand([hidden_dim]).to_event(1))
 
-        # Dynamically build the layer sizes
-        layer_sizes = [input_dim] + [hid_dim] * n_hid_layers + [out_dim]
-        self.layers = PyroModuleList([])
-
-        for i in range(len(layer_sizes) - 1):
-            linear = PyroModule[nn.Linear](layer_sizes[i], layer_sizes[i + 1])
-            # Xavier-inspired scaling for prior std dev
-            weight_prior = dist.Normal(0., prior_scale * np.sqrt(2 / (layer_sizes[i] + layer_sizes[i + 1])))
-            bias_prior = dist.Normal(0., prior_scale)
-
-            linear.weight = PyroSample(weight_prior.expand([layer_sizes[i + 1], layer_sizes[i]]).to_event(2))
-            linear.bias = PyroSample(bias_prior.expand([layer_sizes[i + 1]]).to_event(1))
-
-            self.layers.append(linear)
-
-        # Learnable global observation noise (log σ for numerical stability)
-        self.log_sigma = pyro.param("log_sigma", torch.tensor(-1.0))  # log(σ) ≈ log(0.37)
+        self.out = PyroModule[nn.Linear](hidden_dim, 1)
+        self.out.weight = PyroSample(dist.Normal(0., 1.).expand([1, hidden_dim]).to_event(2))
+        self.out.bias = PyroSample(dist.Normal(0., 1.).expand([1]).to_event(1))
 
     def forward(self, x, y=None):
-        for layer in self.layers[:-1]:
-            x = self.activation(layer(x))  # Hidden layers
-        mu = self.layers[-1](x).squeeze(-1)  # Output layer
-
-        sigma = torch.exp(self.log_sigma)  # Ensure positivity of σ
-
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
+        mean = self.out(x).squeeze(-1)
+        sigma = pyro.sample("sigma", dist.LogNormal(0., 0.3))
         with pyro.plate("data", x.shape[0]):
-            obs = pyro.sample("obs", dist.Normal(mu, sigma), obs=y)
-
-        return mu
+            obs = pyro.sample("obs", dist.Normal(mean, sigma), obs=y)
+        return mean
