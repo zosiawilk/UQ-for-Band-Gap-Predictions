@@ -34,28 +34,42 @@ import numpy as np
     applications like band gap prediction where confidence in results is critical.
 """
 
+import math, torch, torch.nn as nn, pyro
+import pyro.distributions as dist
+from pyro.nn import PyroModule, PyroSample
+
 class BayesianNN(PyroModule):
-    def __init__(self, input_dim):
+    def __init__(self, input_dim: int, hidden=(128, 64)):
         super().__init__()
-        hidden_dim = 64
-        
-        self.fc1 = PyroModule[nn.Linear](input_dim, hidden_dim)
-        self.fc1.weight = PyroSample(dist.Normal(0., 1.).expand([hidden_dim, input_dim]).to_event(2))
-        self.fc1.bias = PyroSample(dist.Normal(0., 1.).expand([hidden_dim]).to_event(1))
+        h1, h2 = hidden               # still tiny: (313*128)+(128*64)+… ≈ 25 k params
 
-        self.fc2 = PyroModule[nn.Linear](hidden_dim, hidden_dim)
-        self.fc2.weight = PyroSample(dist.Normal(0., 1.).expand([hidden_dim, hidden_dim]).to_event(2))
-        self.fc2.bias = PyroSample(dist.Normal(0., 1.).expand([hidden_dim]).to_event(1))
+        # ----- layer 1 ---------------------------------------------------
+        self.fc1 = PyroModule[nn.Linear](input_dim, h1)
+        τ1 = 1 / math.sqrt(input_dim)
+        self.fc1.weight = PyroSample(dist.Normal(0., τ1).expand([h1, input_dim]).to_event(2))
+        self.fc1.bias   = PyroSample(dist.Normal(0., τ1).expand([h1]).to_event(1))
 
-        self.out = PyroModule[nn.Linear](hidden_dim, 1)
-        self.out.weight = PyroSample(dist.Normal(0., 1.).expand([1, hidden_dim]).to_event(2))
-        self.out.bias = PyroSample(dist.Normal(0., 1.).expand([1]).to_event(1))
+        # ----- layer 2 ---------------------------------------------------
+        self.fc2 = PyroModule[nn.Linear](h1, h2)
+        τ2 = 1 / math.sqrt(h1)
+        self.fc2.weight = PyroSample(dist.Normal(0., τ2).expand([h2, h1]).to_event(2))
+        self.fc2.bias   = PyroSample(dist.Normal(0., τ2).expand([h2]).to_event(1))
 
+        # ----- output head ----------------------------------------------
+        self.out = PyroModule[nn.Linear](h2, 1)
+        τ3 = 1 / math.sqrt(h2)
+        self.out.weight = PyroSample(dist.Normal(0., τ3).expand([1, h2]).to_event(2))
+        self.out.bias   = PyroSample(dist.Normal(0., τ3).expand([1]).to_event(1))
+
+    # -------------------------------------------------------------------
     def forward(self, x, y=None):
         x = torch.relu(self.fc1(x))
         x = torch.relu(self.fc2(x))
-        mean = self.out(x).squeeze(-1)
-        sigma = pyro.sample("sigma", dist.LogNormal(0., 0.3))
-        with pyro.plate("data", x.shape[0]):
-            obs = pyro.sample("obs", dist.Normal(mean, sigma), obs=y)
+        mean = self.out(x).squeeze(-1)                 # shape [N]
+
+        sigma = pyro.sample("sigma", dist.HalfCauchy(1.))  # scalar noise scale
+
+        with pyro.plate("data", x.size(0)):
+            pyro.sample("obs", dist.Normal(mean, sigma), obs=y)
+
         return mean

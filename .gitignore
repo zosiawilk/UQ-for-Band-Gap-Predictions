@@ -9,3 +9,7 @@ MP_data/materials_data_10k_featurized.csv
 MP_data/materials_data_10k_cleaned.csv
 *.csv
 test_and_learning_code/*.csv
+*.pt
+Plots/*.png
+Plots
+*.png
