@@ -7,11 +7,8 @@
 ## 📑 Contents
 - [Overview](#-overview)  
 - [Workflow](#-workflow)  
-- [Implemented Models](#-implemented-models)  
-- [Quick Start](#-quick-start)  
+- [Implemented Models](#-implemented-models)   
 - [Results so far](#-results-so-far)  
-- [Road-map](#-road-map)  
-- [Citation](#-citation)  
 
 ---
 
