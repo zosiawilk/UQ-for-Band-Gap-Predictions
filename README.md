@@ -24,12 +24,10 @@ But a single deterministic number hides the real question:
 
 This repository implements and benchmarks multiple **Uncertainty Quantification (UQ)** strategies on a ~100k entry subset of the **Materials Project** dataset.  
 
-It is the live companion to the internship presentation:  
-**“Uncertainty Quantification and Validation of Neural Network Models of Complex Physics.”**
 
 ---
 
-## ⚙️ Workflow
+## Workflow
 
 <p align="center">
   <img src="docs/workflow.png" alt="Workflow pipeline" width="800">
@@ -42,7 +40,7 @@ It is the live companion to the internship presentation:
 4. **Uncertainty Quantification** → Estimate epistemic & aleatoric uncertainties.  
 5. **Validation** → Coverage metrics, calibration curves, MAE vs experiment.
 
-**Models Implemented** 
+## Models Implemented
 
 | Family                 | Implementation                           | UQ Output                   | Status |
 |-------------------------|------------------------------------------|------------------------------|--------|
