@@ -1,0 +1,422 @@
+ColumnName
+Unnamed: 0
+nsites
+volume
+formation_energy_per_atom
+energy_above_hull
+H
+He
+Li
+Be
+B
+C
+N
+O
+F
+Ne
+Na
+Mg
+Al
+Si
+P
+S
+Cl
+Ar
+K
+Ca
+Sc
+Ti
+V
+Cr
+Mn
+Fe
+Co
+Ni
+Cu
+Zn
+Ga
+Ge
+As
+Se
+Br
+Kr
+Rb
+Sr
+Y
+Zr
+Nb
+Mo
+Tc
+Ru
+Rh
+Pd
+Ag
+Cd
+In
+Sn
+Sb
+Te
+I
+Xe
+Cs
+Ba
+La
+Ce
+Pr
+Nd
+Pm
+Sm
+Eu
+Gd
+Tb
+Dy
+Ho
+Er
+Tm
+Yb
+Lu
+Hf
+Ta
+W
+Re
+Os
+Ir
+Pt
+Au
+Hg
+Tl
+Pb
+Bi
+Po
+At
+Rn
+Fr
+Ra
+Ac
+Th
+Pa
+U
+Np
+Pu
+Am
+Cm
+Bk
+Cf
+Es
+Fm
+Md
+No
+Lr
+Rf
+Db
+Sg
+Bh
+Hs
+Mt
+Ds
+Rg
+Cn
+Nh
+Fl
+Mc
+Lv
+Ts
+Og
+transition metal fraction
+0-norm
+2-norm
+3-norm
+5-norm
+7-norm
+10-norm
+band center
+MagpieData minimum Number
+MagpieData maximum Number
+MagpieData range Number
+MagpieData mean Number
+MagpieData avg_dev Number
+MagpieData mode Number
+MagpieData minimum MendeleevNumber
+MagpieData maximum MendeleevNumber
+MagpieData range MendeleevNumber
+MagpieData mean MendeleevNumber
+MagpieData avg_dev MendeleevNumber
+MagpieData mode MendeleevNumber
+MagpieData minimum AtomicWeight
+MagpieData maximum AtomicWeight
+MagpieData range AtomicWeight
+MagpieData mean AtomicWeight
+MagpieData avg_dev AtomicWeight
+MagpieData mode AtomicWeight
+MagpieData minimum MeltingT
+MagpieData maximum MeltingT
+MagpieData range MeltingT
+MagpieData mean MeltingT
+MagpieData avg_dev MeltingT
+MagpieData mode MeltingT
+MagpieData minimum Column
+MagpieData maximum Column
+MagpieData range Column
+MagpieData mean Column
+MagpieData avg_dev Column
+MagpieData mode Column
+MagpieData minimum Row
+MagpieData maximum Row
+MagpieData range Row
+MagpieData mean Row
+MagpieData avg_dev Row
+MagpieData mode Row
+MagpieData minimum CovalentRadius
+MagpieData maximum CovalentRadius
+MagpieData range CovalentRadius
+MagpieData mean CovalentRadius
+MagpieData avg_dev CovalentRadius
+MagpieData mode CovalentRadius
+MagpieData minimum Electronegativity
+MagpieData maximum Electronegativity
+MagpieData range Electronegativity
+MagpieData mean Electronegativity
+MagpieData avg_dev Electronegativity
+MagpieData mode Electronegativity
+MagpieData minimum NsValence
+MagpieData maximum NsValence
+MagpieData range NsValence
+MagpieData mean NsValence
+MagpieData avg_dev NsValence
+MagpieData mode NsValence
+MagpieData minimum NpValence
+MagpieData maximum NpValence
+MagpieData range NpValence
+MagpieData mean NpValence
+MagpieData avg_dev NpValence
+MagpieData mode NpValence
+MagpieData minimum NdValence
+MagpieData maximum NdValence
+MagpieData range NdValence
+MagpieData mean NdValence
+MagpieData avg_dev NdValence
+MagpieData mode NdValence
+MagpieData minimum NfValence
+MagpieData maximum NfValence
+MagpieData range NfValence
+MagpieData mean NfValence
+MagpieData avg_dev NfValence
+MagpieData mode NfValence
+MagpieData minimum NValence
+MagpieData maximum NValence
+MagpieData range NValence
+MagpieData mean NValence
+MagpieData avg_dev NValence
+MagpieData mode NValence
+MagpieData minimum NsUnfilled
+MagpieData maximum NsUnfilled
+MagpieData range NsUnfilled
+MagpieData mean NsUnfilled
+MagpieData avg_dev NsUnfilled
+MagpieData mode NsUnfilled
+MagpieData minimum NpUnfilled
+MagpieData maximum NpUnfilled
+MagpieData range NpUnfilled
+MagpieData mean NpUnfilled
+MagpieData avg_dev NpUnfilled
+MagpieData mode NpUnfilled
+MagpieData minimum NdUnfilled
+MagpieData maximum NdUnfilled
+MagpieData range NdUnfilled
+MagpieData mean NdUnfilled
+MagpieData avg_dev NdUnfilled
+MagpieData mode NdUnfilled
+MagpieData minimum NfUnfilled
+MagpieData maximum NfUnfilled
+MagpieData range NfUnfilled
+MagpieData mean NfUnfilled
+MagpieData avg_dev NfUnfilled
+MagpieData mode NfUnfilled
+MagpieData minimum NUnfilled
+MagpieData maximum NUnfilled
+MagpieData range NUnfilled
+MagpieData mean NUnfilled
+MagpieData avg_dev NUnfilled
+MagpieData mode NUnfilled
+MagpieData minimum GSvolume_pa
+MagpieData maximum GSvolume_pa
+MagpieData range GSvolume_pa
+MagpieData mean GSvolume_pa
+MagpieData avg_dev GSvolume_pa
+MagpieData mode GSvolume_pa
+MagpieData minimum GSbandgap
+MagpieData maximum GSbandgap
+MagpieData range GSbandgap
+MagpieData mean GSbandgap
+MagpieData avg_dev GSbandgap
+MagpieData mode GSbandgap
+MagpieData minimum GSmagmom
+MagpieData maximum GSmagmom
+MagpieData range GSmagmom
+MagpieData mean GSmagmom
+MagpieData avg_dev GSmagmom
+MagpieData mode GSmagmom
+MagpieData minimum SpaceGroupNumber
+MagpieData maximum SpaceGroupNumber
+MagpieData range SpaceGroupNumber
+MagpieData mean SpaceGroupNumber
+MagpieData avg_dev SpaceGroupNumber
+MagpieData mode SpaceGroupNumber
+H fraction
+He fraction
+Li fraction
+Be fraction
+B fraction
+C fraction
+N fraction
+O fraction
+F fraction
+Ne fraction
+Na fraction
+Mg fraction
+Al fraction
+Si fraction
+P fraction
+S fraction
+Cl fraction
+Ar fraction
+K fraction
+Ca fraction
+Sc fraction
+Ti fraction
+V fraction
+Cr fraction
+Mn fraction
+Fe fraction
+Co fraction
+Ni fraction
+Cu fraction
+Zn fraction
+Ga fraction
+Ge fraction
+As fraction
+Se fraction
+Br fraction
+Kr fraction
+Rb fraction
+Sr fraction
+Y fraction
+Zr fraction
+Nb fraction
+Mo fraction
+Tc fraction
+Ru fraction
+Rh fraction
+Pd fraction
+Ag fraction
+Cd fraction
+In fraction
+Sn fraction
+Sb fraction
+Te fraction
+I fraction
+Xe fraction
+Cs fraction
+Ba fraction
+La fraction
+Ce fraction
+Pr fraction
+Nd fraction
+Pm fraction
+Sm fraction
+Eu fraction
+Gd fraction
+Tb fraction
+Dy fraction
+Ho fraction
+Er fraction
+Tm fraction
+Yb fraction
+Lu fraction
+Hf fraction
+Ta fraction
+W fraction
+Re fraction
+Os fraction
+Ir fraction
+Pt fraction
+Au fraction
+Hg fraction
+Tl fraction
+Pb fraction
+Bi fraction
+Po fraction
+At fraction
+Rn fraction
+Fr fraction
+Ra fraction
+Ac fraction
+Th fraction
+Pa fraction
+U fraction
+Np fraction
+Pu fraction
+Am fraction
+Cm fraction
+Bk fraction
+Cf fraction
+Es fraction
+Fm fraction
+Md fraction
+No fraction
+Lr fraction
+Rf fraction
+Db fraction
+Sg fraction
+Bh fraction
+Hs fraction
+Mt fraction
+Ds fraction
+Rg fraction
+Cn fraction
+Nh fraction
+Fl fraction
+Mc fraction
+Lv fraction
+Ts fraction
+Og fraction
+mean AtomicWeight
+mean Column
+mean Row
+range Number
+mean Number
+range AtomicRadius
+mean AtomicRadius
+range Electronegativity
+mean Electronegativity
+avg s valence electrons
+avg p valence electrons
+avg d valence electrons
+avg f valence electrons
+frac s valence electrons
+frac p valence electrons
+frac d valence electrons
+frac f valence electrons
+HOMO_energy
+LUMO_energy
+gap_AO
+mean simul. packing efficiency
+mean abs simul. packing efficiency
+dist from 1 clusters |APE| < 0.010
+dist from 3 clusters |APE| < 0.010
+dist from 5 clusters |APE| < 0.010
+density
+vpa
+packing fraction
+mean ordering parameter shell 1
+mean ordering parameter shell 2
+mean ordering parameter shell 3
+max packing efficiency
+structural complexity per atom
+structural complexity per cell
+spacegroup_num
+crystal_system
+crystal_system_int
+is_centrosymmetric
+n_symmetry_ops
+dimensionality
