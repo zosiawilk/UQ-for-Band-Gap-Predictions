@@ -28,10 +28,7 @@ This repository implements and benchmarks multiple **Uncertainty Quantification 
 ---
 
 ## Workflow
-
-<p align="center">
-  <img src="docs/workflow.png" alt="Workflow pipeline" width="800">
-</p>
+![Workflow](MP_Data/Workflow.png)
 
 **Pipeline stages:**
 1. **Data Collection & Featurisation** → Raw Materials Project data, matminer descriptors.  
