@@ -1,82 +1,67 @@
 # Uncertainty Quantification for Band-Gap Prediction  
-*Internship project – “Uncertainty Quantification and Validation of Neural
-Network Models of Complex Physics”*
+
+**Internship Project – “Uncertainty Quantification and Validation of Neural Network Models of Complex Physics”**
 
 ---
 
-## Contents
-| section | short description |
-|---------|-------------------|
-| [Overview](#overview) | What problem we solve and why UQ matters |
-| [Workflow](#workflow) | 6-stage pipeline from raw MP data to calibrated uncertainties |
-| [Implemented models](#implemented-models) | Direct-Error, BNN, MC-Dropout, GPR, Deep-Ensemble |
-| [Quick start](#quick-start) | Conda install & one-liner training |
-| [Results-so-far](#results-so-far) | snapshot metrics & example plots |
-| [Road-map](#road-map) | next experiments from the presentation |
-| [Citation](#citation) | how to reference this repo |
+## 📑 Contents
+- [Overview](#-overview)  
+- [Workflow](#-workflow)  
+- [Implemented Models](#-implemented-models)  
+- [Quick Start](#-quick-start)  
+- [Results so far](#-results-so-far)  
+- [Road-map](#-road-map)  
+- [Citation](#-citation)  
 
 ---
 
-## Overview
-Predicting the electronic **band gap (E<sub>g</sub>)** of crystalline materials
-is crucial for screening photovoltaics, thermoelectrics and wide-band semiconductors.
-A single deterministic number, however, hides the real question:
+## 🔎 Overview
+Predicting the electronic band gap (\(E_g\)) of crystalline materials is crucial for screening photovoltaics, thermoelectrics, and wide-band semiconductors.  
 
-> *How confident should we be in that prediction?*
+But a single deterministic number hides the real question:  
 
-This repo implements and benchmarks multiple **Uncertainty Quantification (UQ)
-strategies** on a 10 k-entry subset of the Materials Project.  
-The code is the live counterpart to the internship presentation “Uncertainty
-Quantification and Validation of Neural Network Models of Complex Physics”. :contentReference[oaicite:4]{index=4}
+**➡How confident should we be in that prediction?**
 
----
+This repository implements and benchmarks multiple **Uncertainty Quantification (UQ)** strategies on a ~100k entry subset of the **Materials Project** dataset.  
 
-## Workflow
-Materials Project CSV → Matminer features → GBFSW / manual
-│ │ │
-▼ ▼ ▼
-data_collection featurization feature_selection
-│
-▼
-┌──────────────────────────┐
-│ model_training.py │ ← BNN / GPR / Dropout / Ensemble
-└──────────────────────────┘
-│
-▼
-uncertainty_estimation.py
-│
-▼
-validation & plotting
-
-yaml
-Copy
-Edit
-Each stage is a standalone script; run `python stage_name.py -h` for options.
+It is the live companion to the internship presentation:  
+**“Uncertainty Quantification and Validation of Neural Network Models of Complex Physics.”**
 
 ---
 
-## Implemented models
-| family | concrete implementation | UQ output |
-|--------|-------------------------|-----------|
-| **Direct Error Modelling** | XGB regressor on |ε| | point estimate of |ΔE<sub>g</sub>| |
-| **Bayesian NN** | MCMC **and** Variational-Inference BNN | predictive μ, σ |
-| **MC-Dropout** | Self-normalising MLP + Monte-Carlo passes | epistemic + aleatoric σ |
-| **Gaussian Process** | Dynamic ARD kernel, SelectKBest | closed-form μ, σ |
-| **Deep Ensemble** | 5 random-seed MLPs | ensemble variance |
+## ⚙️ Workflow
 
-Uncertainty is validated via **coverage** of 95 %/68 % credible intervals and
-**MAE** against experimental band-gaps. :contentReference[oaicite:5]{index=5}
+<p align="center">
+  <img src="docs/workflow.png" alt="Workflow pipeline" width="800">
+</p>
 
----
+**Pipeline stages:**
+1. **Data Collection & Featurisation** → Raw Materials Project data, matminer descriptors.  
+2. **Feature Selection** → Filtering & dimensionality reduction (GBFSW, manual).  
+3. **Model Training** → Train GPR, Bayesian NNs, MC-Dropout.  
+4. **Uncertainty Quantification** → Estimate epistemic & aleatoric uncertainties.  
+5. **Validation** → Coverage metrics, calibration curves, MAE vs experiment.  
 
-## Quick start
+Each stage is modular and script-based. Run with:
 ```bash
-git clone https://github.com/<your-handle>/bandgap-uq.git
-cd bandgap-uq
+python stage_name.py -h
 
-# create env (CPU TF by default)
-conda env create -f environment.yml
-conda activate bandgap-uq
 
-# one-line MC-Dropout training & test-set evaluation
-python src/train_bnn.py --model dropout --csv data/materials_data_10k_cleaned.csv
+| Family                 | Implementation                           | UQ Output                   | Status |
+|-------------------------|------------------------------------------|------------------------------|--------|
+| **Gaussian Process**   | ARD kernel + feature selection           | closed-form μ, σ             | ✅ working |
+| **Bayesian NN (MCMC)** | HMC/NUTS inference                       | posterior predictive μ, σ     | ✅ working |
+| **Bayesian NN (VI)**   | Variational Inference (Bayes-by-Backprop)| approximate posterior μ, σ    | ✅ working |
+| **MC-Dropout**         | Self-normalizing MLP + test-time dropout | epistemic + aleatoric σ      | ✅ working |
+| **Direct-Error Model** | XGBoost on residuals                     | did not converge / not usable | ❌ failed |
+
+
+## Results so far
+
+| Model        | \(R^2\) | MSE   | NLL   |
+|--------------|---------|-------|-------|
+| BNN (MCMC)   | 0.844   | 0.312 | 0.483 |
+| BNN (VI)     | 0.796   | 0.447 | 2.126 |
+| MC Dropout   | 0.784   | 0.481 | 2.804 |
+| GPR          | 0.757   | 0.535 | 1.234 |
+
