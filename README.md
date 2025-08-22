@@ -40,12 +40,9 @@ It is the live companion to the internship presentation:
 2. **Feature Selection** → Filtering & dimensionality reduction (GBFSW, manual).  
 3. **Model Training** → Train GPR, Bayesian NNs, MC-Dropout.  
 4. **Uncertainty Quantification** → Estimate epistemic & aleatoric uncertainties.  
-5. **Validation** → Coverage metrics, calibration curves, MAE vs experiment.  
+5. **Validation** → Coverage metrics, calibration curves, MAE vs experiment.
 
-Each stage is modular and script-based. Run with:
-```bash
-python stage_name.py -h
-
+**Models Implemented** 
 
 | Family                 | Implementation                           | UQ Output                   | Status |
 |-------------------------|------------------------------------------|------------------------------|--------|
